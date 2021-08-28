@@ -1,11 +1,11 @@
 version: "3"
 services:
     # PHP Service
-    laravel-api:
+    api:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: app
+        container_name: api
         restart: unless-stopped
         tty: true
         environment:
@@ -17,6 +17,7 @@ services:
             - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - app-network
+            - db-network
 
     # Nginx Service
     webserver:
@@ -32,10 +33,9 @@ services:
             - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
         networks:
             - app-network
-            - db-network
 
     # MySQL Service
-    database:
+    db:
         image: mysql:5.7.22
         container_name: db
         restart: unless-stopped
