@@ -5,7 +5,7 @@ framework `Laravel` e `Docker`
 
 
 ## Startar o projeto
-`
+
 Após clonar e acessar a pasta configurar o arquivo `.env` e executar os comandos:
 
 Exemplo de configuração banco de dados.
