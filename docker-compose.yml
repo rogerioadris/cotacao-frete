@@ -1,5 +1,39 @@
 version: "3"
 services:
+    # Nginx Service
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - app-network
+
+    # Vue UI
+    vue-ui:
+        build:
+            context: ./vue
+            dockerfile: Dockerfile
+        stdin_open: true
+        tty: true
+        ports:
+            - "8080:8080"
+        container_name: vue-ui
+        volumes:
+            - ./vue:/usr/src/app
+            - /usr/src/app/node_modules
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+        networks:
+            - app-network
+        depends_on:
+            - api
+
     # PHP Service
     api:
         build:
@@ -18,21 +52,8 @@ services:
         networks:
             - app-network
             - db-network
-
-    # Nginx Service
-    webserver:
-        image: nginx:alpine
-        container_name: webserver
-        restart: unless-stopped
-        tty: true
-        ports:
-            - "80:80"
-            - "443:443"
-        volumes:
-            - ./:/var/www
-            - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-        networks:
-            - app-network
+        depends_on:
+            - db
 
     # MySQL Service
     db:
