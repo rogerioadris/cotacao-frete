@@ -1,4 +1,4 @@
-# Sistema de cotação de frete: Backend.
+# Sistema de cotação de frete.
 
 sistema de cotação de frete, desenvolvido em `PHP` utilizando o
 framework `Laravel` e `Docker`
