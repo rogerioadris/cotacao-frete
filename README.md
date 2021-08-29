@@ -3,12 +3,12 @@
 sistema de cotação de frete, desenvolvido em `PHP` utilizando o
 framework `Laravel` e `Docker`
 
+## Como usar
 
-## Startar o projeto
+Clonar repositório `git clone https://github.com/rogerioadris/cotacao-frete.git`
 
-Após clonar e acessar a pasta configurar o arquivo `.env` e executar os comandos:
+Renomear o arquivo `.env.example` para `.env` e alterar a conexão do banco de dados:
 
-Exemplo de configuração banco de dados.
 ```
 DB_CONNECTION=mysql
 DB_HOST=db
@@ -18,14 +18,26 @@ DB_USERNAME=root
 DB_PASSWORD=5x7wPxtXBuRsBv7A
 ```
 
-Executar os comandos
+Iniciar os container docker:
+
 ```sh
-# Iniciar docker
 docker-compose up -d
+```
 
-# Criar tabelas no banco
+Instalar dependências php
+
+```sh
+docker-compose exec api composer install
+```
+
+Criar tabelas no banco
+
+```sh
 docker-compose exec api php artisan migrate
+```
 
-# Adicionar dados iniciais
+Cadastrar transportadoras
+
+```sh
 docker-compose exec api php artisan db:seed --class=TransportadoraSeeder
 ```
